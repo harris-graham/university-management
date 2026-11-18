@@ -1,0 +1,81 @@
+name: CI / Quality & Security
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  php-lint:
+    name: PHP Syntax Check (${{ matrix.php-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: ['8.1', '8.2', '8.3']
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: pdo, pdo_mysql, mbstring, json
+          tools: php-cs-fixer
+
+      - name: Lint PHP files
+        run: |
+          echo "Vérification de la syntaxe de tous les fichiers PHP..."
+          find . -name "*.php" -not -path "./vendor/*" -exec php -l {} +
+
+  database-validation:
+    name: Database Schema & Seed Validation
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: gestion_universite
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Test Schema Import
+        run: |
+          mysql -h 127.0.0.1 -P 3306 -u root -proot < database/schema.sql
+          echo "Schema SQL successfully loaded!"
+
+      - name: Test Seed Data Import
+        run: |
+          mysql -h 127.0.0.1 -P 3306 -u root -proot gestion_universite < database/seed.sql
+          echo "Seed data successfully loaded!"
+
+      - name: Verify Table Counts
+        run: |
+          mysql -h 127.0.0.1 -P 3306 -u root -proot -e "USE gestion_universite; SHOW TABLES;"
+
+  security-scan:
+    name: Security & Secret Audit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check for Raw mysqli_query calls (Regressions)
+        run: |
+          if grep -rn "mysqli_query(" --include="*.php" .; then
+            echo "Error: Found unescaped legacy mysqli_query calls!"
+            exit 1
+          else
+            echo "Clean: All queries are using modern PDO prepared statements."
+          fi

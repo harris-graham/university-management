@@ -1,0 +1,118 @@
+/**
+ * GestUniv - Modern UI Enhancements & Animations
+ */
+
+:root {
+  --primary-color: #4e73df;
+  --primary-hover: #2e59d9;
+  --secondary-color: #858796;
+  --success-color: #1cc88a;
+  --info-color: #36b9cc;
+  --warning-color: #f6c23e;
+  --danger-color: #e74a3b;
+  --card-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+  --transition-speed: 0.25s;
+}
+
+/* Animations and Transitions */
+.card {
+  transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+  border-radius: 0.5rem;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0.5rem 2rem 0 rgba(58, 59, 69, 0.2) !important;
+}
+
+.btn {
+  transition: all 0.2s ease-in-out;
+  border-radius: 0.35rem;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+/* Sidebar Custom Styling */
+.sidebar .sidebar-brand-text {
+  letter-spacing: 2px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.sidebar .nav-item .nav-link {
+  border-radius: 0.35rem;
+  margin: 0.15rem 0.5rem;
+}
+
+.sidebar .nav-item .nav-link:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* DataTables polish */
+.table-responsive {
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.08);
+}
+
+.table thead th {
+  border-top: none;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Toasts custom positioning */
+.toast-container {
+  pointer-events: none;
+}
+.toast-container .toast {
+  pointer-events: auto;
+}
+
+/* Badges */
+.badge-counter {
+  position: absolute;
+  transform: scale(0.7);
+  transform-origin: top right;
+  right: 0.25rem;
+  margin-top: -0.25rem;
+}
+
+/* Stats Metric Cards */
+.border-left-primary {
+  border-left: 0.25rem solid var(--primary-color) !important;
+}
+.border-left-success {
+  border-left: 0.25rem solid var(--success-color) !important;
+}
+.border-left-info {
+  border-left: 0.25rem solid var(--info-color) !important;
+}
+.border-left-warning {
+  border-left: 0.25rem solid var(--warning-color) !important;
+}
+.border-left-danger {
+  border-left: 0.25rem solid var(--danger-color) !important;
+}
+
+/* Print Optimization */
+@media print {
+  .navbar, .sidebar, .btn, .modal, .toast-container, .dataTables_filter, .dataTables_length, .dataTables_paginate {
+    display: none !important;
+  }
+  .col-lg-11, .col-lg-12, body {
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .card {
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+  }
+  .table {
+    width: 100% !important;
+  }
+}

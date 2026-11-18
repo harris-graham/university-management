@@ -1,0 +1,43 @@
+# ==============================================================================
+# GestUniv - .gitignore
+# ==============================================================================
+
+# Configuration locale & Environnement
+inclus/config.local.php
+.env
+.env.local
+.env.*.local
+
+# Fichiers de log & dumps
+*.log
+*.sql.gz
+*.sql.bak
+error_log
+
+# IDEs et éditeurs
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+*.swo
+*~
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Dépendances éventuelles
+vendor/
+node_modules/
+composer.lock
+package-lock.json
+
+# Fichiers temporaires et caches
+tmp/
+temp/
+cache/
+.phpunit.result.cache

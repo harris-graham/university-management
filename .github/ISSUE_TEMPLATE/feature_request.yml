@@ -1,0 +1,39 @@
+name: 💡 Proposition de fonctionnalité / Feature Request
+description: Suggérer une nouvelle idée ou une amélioration pour GestUniv
+title: "[FEATURE] : "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Partagez vos propositions pour enrichir la gestion universitaire !
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problème ou besoin constaté
+      description: À quel besoin ou limitation cette fonctionnalité répond-elle ?
+      placeholder: Il est actuellement difficile de ...
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Solution proposée
+      description: Décrivez précisément le fonctionnement souhaité.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives envisagées
+      description: Avez-vous pensé à d'autres approches ?
+  - type: checkboxes
+    id: context
+    attributes:
+      label: Module concerné
+      options:
+        - label: Étudiants & Inscriptions
+        - label: Emploi du temps & Assiduité
+        - label: Examens & Délibérations
+        - label: Enseignants & Cours
+        - label: Sécurité & Authentification

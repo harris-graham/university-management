@@ -1,0 +1,35 @@
+name: Production Deployment
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      target_env:
+        description: 'Environment to deploy'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - production
+
+jobs:
+  deploy:
+    name: Deploy to ${{ inputs.target_env || 'production' }}
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.target_env || 'production' }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Packaging Application
+        run: |
+          mkdir -p build/
+          rsync -av --exclude='.git' --exclude='.github' --exclude='database/*.bak' ./ build/
+          echo "Package prepared successfully."
+
+      - name: Deployment Step (Placeholder for server deployment)
+        run: |
+          echo "Application is ready for server deployment."
